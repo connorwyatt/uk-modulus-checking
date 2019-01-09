@@ -11,11 +11,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _constants = require('./constants');
 
-var _fs = require('fs');
+var _scsubtab = require('./data/scsubtab');
 
-var _fs2 = _interopRequireDefault(_fs);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _valacdosV530Updated = require('./data/valacdos-v530-updated');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -324,19 +322,14 @@ var UkModulusChecking = function () {
   }, {
     key: 'loadScsubtab',
     value: function loadScsubtab() {
-      var content = _fs2.default.readFileSync(__dirname + '/data/scsubtab.txt', 'utf8');
-      var scsubtab = [];
-
-      content.split('\r\n').forEach(function (line) {
+      return _scsubtab.scSubTab.map(function (line) {
         var data = line.split(/\s+/);
 
-        scsubtab.push({
+        return {
           original: parseInt(data[0], 10),
           substitute: parseInt(data[1], 10)
-        });
+        };
       });
-
-      return scsubtab;
     }
 
     /**
@@ -346,14 +339,11 @@ var UkModulusChecking = function () {
   }, {
     key: 'loadValacdos',
     value: function loadValacdos() {
-      var content = _fs2.default.readFileSync(__dirname + '/data/valacdos-v530-updated.txt', 'utf8');
-      var valacdos = [];
-
-      content.split('\r\n').forEach(function (line) {
+      return _valacdosV530Updated.valacdosV530Updated.map(function (line) {
         var data = line.split(/\s+/);
 
         /* jscs:disable validateOrderInObjectKeys */
-        valacdos.push({
+        return {
           start: parseInt(data[0], 10),
           end: parseInt(data[1], 10),
           mod: data[2],
@@ -372,11 +362,9 @@ var UkModulusChecking = function () {
           g: parseInt(data[15], 10),
           h: parseInt(data[16], 10),
           exception: parseInt(data[17], 10) || null
-        });
+        };
         /* jscs:enable validateOrderInObjectKeys */
       });
-
-      return valacdos;
     }
 
     /**

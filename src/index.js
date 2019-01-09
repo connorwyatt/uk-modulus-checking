@@ -4,7 +4,8 @@
  */
 
 import { positions } from './constants';
-import fs from 'fs';
+import { scSubTab } from './data/scsubtab';
+import { valacdosV530Updated } from './data/valacdos-v530-updated';
 
 /**
  * Export UkModulusChecking.
@@ -244,19 +245,14 @@ export default class UkModulusChecking {
    */
 
   loadScsubtab() {
-    const content = fs.readFileSync(`${__dirname}/data/scsubtab.txt`, 'utf8');
-    const scsubtab = [];
-
-    content.split('\r\n').forEach((line) => {
+    return scSubTab.map((line) => {
       const data = line.split(/\s+/);
 
-      scsubtab.push({
+      return {
         original: parseInt(data[0], 10),
         substitute: parseInt(data[1], 10)
-      });
+      };
     });
-
-    return scsubtab;
   }
 
   /**
@@ -264,14 +260,11 @@ export default class UkModulusChecking {
    */
 
   loadValacdos() {
-    const content = fs.readFileSync(`${__dirname}/data/valacdos-v530-updated.txt`, 'utf8');
-    const valacdos = [];
-
-    content.split('\r\n').forEach((line) => {
+    return valacdosV530Updated.map((line) => {
       const data = line.split(/\s+/);
 
       /* jscs:disable validateOrderInObjectKeys */
-      valacdos.push({
+      return {
         start: parseInt(data[0], 10),
         end: parseInt(data[1], 10),
         mod: data[2],
@@ -290,11 +283,9 @@ export default class UkModulusChecking {
         g: parseInt(data[15], 10),
         h: parseInt(data[16], 10),
         exception: parseInt(data[17], 10) || null
-      });
+      };
       /* jscs:enable validateOrderInObjectKeys */
     });
-
-    return valacdos;
   }
 
   /**
